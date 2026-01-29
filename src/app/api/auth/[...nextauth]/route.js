@@ -1,8 +1,10 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import GitHubProvider from "next-auth/providers/github"; 
+import GitHubProvider from "next-auth/providers/github";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
+import dbConnect from "@/lib/mongoose";
+import User from "@/models/User";
 
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -19,17 +21,28 @@ export const authOptions = {
   session: {
     strategy: "jwt",
   },
-  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async session({ session, token }) {
-      if (token?.sub) {
-        session.user.id = token.sub;
+    async jwt({ token, user, trigger, session }) {
+      // 1. On initial sign-in, fetch username from DB
+      if (user) {
+        await dbConnect();
+        const dbUser = await User.findOne({ email: user.email });
+        token.username = dbUser?.username || null;
       }
+      
+      // 2. Allow manual updates (we'll use this after they claim a name)
+      if (trigger === "update" && session?.username) {
+        token.username = session.username;
+      }
+
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.username = token.username;
       return session;
     },
   },
 };
 
 const handler = NextAuth(authOptions);
-
 export { handler as GET, handler as POST };

@@ -12,6 +12,7 @@ const LinkSchema = new Schema({
 const UserSchema = new Schema({
   name: String,
   email: { type: String, unique: true, required: true },
+  bio: String,
   image: String,
   username: { type: String, unique: true, sparse: true }, 
   theme: { type: String, default: 'minimal' },

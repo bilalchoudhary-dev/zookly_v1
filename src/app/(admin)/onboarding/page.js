@@ -2,23 +2,27 @@
 import { useState } from "react";
 import { claimUsername } from "@/actions/usernameActions";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
 
 export default function Onboarding() {
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const { update } = useSession();
 
   async function handleSubmit(formData) {
     setLoading(true);
     setError("");
-    
+
     const result = await claimUsername(formData);
-    
-    if (result.error) {
+
+    if (result.success) {
+      await update({ username: result.username });
+      router.push("/dashboard");
+    } else if (result.error) {
       setError(result.error);
       setLoading(false);
-    } else {
-      router.push("/dashboard"); // Send them to the real tool!
     }
   }
 
@@ -40,7 +44,7 @@ export default function Onboarding() {
               required
             />
           </div>
-          
+
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <button
