@@ -5,7 +5,7 @@ const { Schema, model, models } = mongoose;
 const LinkSchema = new Schema({
   title: { type: String, required: true },
   url: { type: String, required: true },
-  icon: { type: String }, // We'll use our Regex magic here later
+  icon: { type: String }, 
   order: { type: Number, default: 0 },
 });
 

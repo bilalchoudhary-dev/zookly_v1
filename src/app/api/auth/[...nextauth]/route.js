@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github"; 
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import clientPromise from "@/lib/mongodb"; // We'll create this next
+import clientPromise from "@/lib/mongodb";
 
 export const authOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -10,15 +11,20 @@ export const authOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+    }),
   ],
   session: {
-    strategy: "jwt", // Using JWT for that Edge/Middleware performance we discussed
+    strategy: "jwt",
   },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async session({ session, token }) {
-      // We attach the user ID and username to the session 
-      // so we can use them in the Dashboard without extra DB calls
-      session.user.id = token.sub;
+      if (token?.sub) {
+        session.user.id = token.sub;
+      }
       return session;
     },
   },
