@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { saveProfile, getProfile, deleteLink } from "@/actions/linkActions";
 import { ProfileSchema } from "@/lib/schemas";
 import { getIconByUrl } from "@/lib/icons";
-import { Plus, Save, UserCircle, Loader2 } from "lucide-react";
+import { Plus, Save, UserCircle, Loader2, Copy } from "lucide-react";
 import PhonePreview from "@/Components/dashboard/PhonePreview";
 import SortableLink from "@/Components/dashboard/SortableLink";
 import { toast } from "sonner";
@@ -47,6 +47,14 @@ export default function DashboardPage() {
     }
     loadData();
   }, []);
+
+  const copyToClipboard = () => {
+  const url = `${window.location.origin}/${profile.username}`;
+  navigator.clipboard.writeText(url);
+  toast.success("Copied to clipboard!", {
+    description: "Ready to paste in your Instagram bio.",
+  });
+};
 
   // 2. Sensors for Drag & Drop (Prevents accidental drags when clicking inputs)
   const sensors = useSensors(
@@ -175,6 +183,14 @@ export default function DashboardPage() {
               <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">
                 Your LinkHub Handle
               </p>
+              <div className="flex gap-3 mt-4 sm:mt-0 relative z-10">
+    <button 
+      onClick={copyToClipboard}
+      className="bg-white text-blue-900 px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2 hover:bg-blue-50 transition-colors shadow-lg"
+    >
+      <Copy size={16} /> Copy Link
+    </button>
+  </div>
             </div>
           </div>
 

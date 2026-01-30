@@ -1,15 +1,26 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { claimUsername } from "@/actions/usernameActions";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { Loader2 } from "lucide-react";
 
 
 export default function Onboarding() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
     const { update } = useSession();
+
+    const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    const desired = searchParams.get("desiredUsername");
+    if (desired) {
+      setInputValue(desired);
+    }
+  }, [searchParams]);
 
   async function handleSubmit(formData) {
     setLoading(true);
@@ -40,8 +51,11 @@ export default function Onboarding() {
             <input
               name="username"
               placeholder="username"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
               className="w-full pl-28 pr-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              autoFocus
             />
           </div>
 
@@ -51,7 +65,7 @@ export default function Onboarding() {
             disabled={loading}
             className="w-full bg-slate-900 text-white py-3 rounded-lg font-medium hover:bg-slate-800 transition-colors"
           >
-            {loading ? "Checking..." : "Claim Username"}
+            {loading ? <Loader2 className="animate-spin" />: "Claim Username"}
           </button>
         </form>
       </div>
