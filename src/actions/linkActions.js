@@ -52,6 +52,30 @@ export async function getProfile() {
     bio: user.bio || "",
     username: user.username || "",
     image: user.image || "",
-    links: user.links || []
+    links: user.links ? user.links.map(link => ({
+      ...link,
+      _id: link._id.toString(), // The magic fix
+      title: link.title,
+      url: link.url,
+      icon: link.icon
+    })) : []
   };
+}
+
+// ... existing imports
+
+export async function deleteLink(linkId) {
+  await dbConnect();
+  const session = await getServerSession(authOptions);
+  if (!session) return { error: "Unauthorized" };
+
+  try {
+    await User.findOneAndUpdate(
+      { email: session.user.email },
+      { $pull: { links: { _id: linkId } } } // The magic operator
+    );
+    return { success: true };
+  } catch (e) {
+    return { error: "Failed to delete link" };
+  }
 }
