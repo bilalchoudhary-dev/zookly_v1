@@ -15,6 +15,11 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'i.pinimg.com', // Allow images from Pinterest
+        pathname: '**',
+      },
     ],
   },
 };
