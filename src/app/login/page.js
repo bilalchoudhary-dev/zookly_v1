@@ -1,10 +1,15 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+// CHANGED: Imported useSearchParams to capture login errors
+import { useSearchParams } from "next/navigation";
 import { Github, LogOut, Loader2, User } from "lucide-react";
 
 export default function LoginPage() {
   const { data: session, status } = useSession();
+  // CHANGED: Hook to read query parameters (e.g., ?error=AccessDenied)
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
 
   // 1. Improved Loading Spinner UX
   if (status === "loading") {
@@ -15,6 +20,7 @@ export default function LoginPage() {
       </div>
     );
   }
+
 
   if (session) {
     return (
@@ -63,6 +69,13 @@ export default function LoginPage() {
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-2">Sign In</h1>
           <p className="text-slate-500 text-sm">Choose a provider to continue to your dashboard.</p>
         </header>
+
+        {/* CHANGED: Added error feedback UI to inform users why login failed */}
+        {error && (
+          <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-6 border border-red-100 text-center">
+            Login failed: {error}
+          </div>
+        )}
 
         <div className="flex flex-col gap-3">
           {/* 3. Redirect Callbacks added to signIn */}

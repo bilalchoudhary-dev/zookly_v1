@@ -7,7 +7,7 @@ import {  Zap, Shield, BarChart3, Palette } from "lucide-react";
 
 export default function Home() {
   const [username, setUsername] = useState("");
-  const { data: session } = useSession(); // Check login status
+  const { data: session } = useSession(); 
   const router = useRouter();
 
   const handleClaim = (e) => {

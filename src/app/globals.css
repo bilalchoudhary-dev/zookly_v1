@@ -2,11 +2,12 @@
 
 @theme {
   /* Our Curated Theme Variables */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  /* CHANGED: Added --color- prefix so Tailwind generates utility classes (bg-background, etc.) */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.145 0 0);
   
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  --color-primary: oklch(0.205 0 0);
+  --color-primary-foreground: oklch(0.985 0 0);
 
   --radius-lg: 0.5rem;
   --radius-md: calc(0.5rem - 2px);
@@ -16,6 +17,7 @@
 /* Base styles to prevent that "white-on-white" disaster */
 @layer base {
   body {
-    @apply bg-[var(--background)] text-[var(--foreground)] antialiased;
+    /* CHANGED: Replaced verbose manual variable usage with generated utility classes */
+    @apply bg-background text-foreground antialiased;
   }
 }

@@ -1,19 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
-import { claimUsername } from "@/actions/usernameActions";
+// CHANGED: Verify this import path matches your project structure (app/actions vs lib/actions)
+import { claimUsername } from "@/app/actions"; 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 
-
 export default function Onboarding() {
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const { update } = useSession();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { update } = useSession();
 
-    const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     const desired = searchParams.get("desiredUsername");
@@ -29,7 +29,14 @@ export default function Onboarding() {
     const result = await claimUsername(formData);
 
     if (result.success) {
+      // 1. Update the session cookie so middleware sees the new username
       await update({ username: result.username });
+      
+      // CHANGED: Added router.refresh() to invalidate Client Cache
+      // Without this, the Dashboard checks the old cached session (no username) and kicks you back here.
+      router.refresh(); 
+
+      // 3. Navigate after the refresh logic is queued
       router.push("/dashboard");
     } else if (result.error) {
       setError(result.error);
@@ -45,27 +52,29 @@ export default function Onboarding() {
 
         <form action={handleSubmit} className="space-y-4">
           <div className="relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
               linkhub.com/
             </span>
             <input
               name="username"
               placeholder="username"
               value={inputValue}
+              // CHANGED: Disabled input during loading to prevent double-edits while submitting
+              disabled={loading}
               onChange={(e) => setInputValue(e.target.value)}
-              className="w-full pl-28 pr-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-28 pr-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-slate-50 disabled:text-slate-400"
               required
               autoFocus
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {error && <p className="text-red-500 text-sm font-medium">{error}</p>}
 
           <button
             disabled={loading}
-            className="w-full bg-slate-900 text-white py-3 rounded-lg font-medium hover:bg-slate-800 transition-colors"
+            className="w-full bg-slate-900 text-white py-3 rounded-lg font-medium hover:bg-slate-800 transition-colors flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            {loading ? <Loader2 className="animate-spin" />: "Claim Username"}
+            {loading ? <Loader2 className="animate-spin" /> : "Claim Username"}
           </button>
         </form>
       </div>
