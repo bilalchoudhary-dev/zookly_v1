@@ -7,6 +7,7 @@ const LinkSchema = new Schema({
   url: { type: String, required: true },
   icon: { type: String }, 
   order: { type: Number, default: 0 },
+  clicks: { type: Number, default: 0 },
 });
 
 const UserSchema = new Schema({
@@ -16,6 +17,7 @@ const UserSchema = new Schema({
   image: String,
   username: { type: String, unique: true, sparse: true }, 
   theme: { type: String, default: 'minimal' },
+  views: { type: Number, default: 0 },
   links: [LinkSchema],
 }, { timestamps: true });
 

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { getProfile } from "@/actions/linkActions";
 import { updateTheme } from "@/actions/themeActions";
 import { themes } from "@/lib/themes";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import { Palette, Loader2, Check, Save } from "lucide-react";
 import PhonePreview from "@/Components/dashboard/PhonePreview";
 
@@ -52,7 +52,6 @@ export default function AppearancePage() {
 
   return (
     <div className="flex flex-col lg:flex-row gap-12 max-w-7xl mx-auto p-4">
-      <Toaster position="bottom-right" richColors />
 
       {/* LEFT: Theme Selector */}
       <div className="flex-1 space-y-8">

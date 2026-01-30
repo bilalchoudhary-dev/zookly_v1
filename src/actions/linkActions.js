@@ -52,6 +52,8 @@ export async function getProfile() {
     bio: user.bio || "",
     username: user.username || "",
     image: user.image || "",
+    theme: user.theme || "minimal",
+    views: user.views || 0,
     links: user.links ? user.links.map(link => ({
       ...link,
       _id: link._id.toString(), // The magic fix
