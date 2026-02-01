@@ -40,7 +40,8 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-blue-100">
+    // FIX: Added 'overflow-x-hidden' to prevent horizontal scrolling from decorative blobs
+    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-blue-100 overflow-x-hidden">
       <Navbar />
 
       <main>
@@ -93,9 +94,6 @@ export default function Home() {
           <div className="flex-1 w-full max-w-[400px] flex justify-center perspective-1000">
             <div className="relative transform md:rotate-y-[-12deg] md:rotate-x-[5deg] transition-all duration-500 hover:rotate-0">
                
-               {/* FIX: Removed the outer border-[14px], bg-white, and rounded classes here.
-                 The PhonePreview component now handles its own bezel and styling.
-               */}
                <div className="relative z-20">
                   <PhonePreview 
                     links={previewLinks} 
@@ -104,7 +102,7 @@ export default function Home() {
                   />
                </div>
                
-               {/* Decorative blobs behind phone */}
+               {/* Decorative blobs behind phone - These caused the overflow */}
                <div className="absolute top-10 -right-20 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl -z-10 animate-pulse" />
                <div className="absolute -bottom-10 -left-20 w-72 h-72 bg-purple-400/20 rounded-full blur-3xl -z-10 animate-pulse delay-700" />
             </div>

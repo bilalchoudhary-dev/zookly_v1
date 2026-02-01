@@ -8,8 +8,10 @@ export default function PhonePreview({
   profile = {}, 
   links = [] 
 }) {
+  // Defensive Logic: Use provided links prop OR profile.links OR empty array
   const linksToRender = links.length > 0 ? links : (profile.links || []);
 
+  // Safe fallback if theme is missing or invalid
   const themeId = profile.theme || "minimal";
   const activeTheme = getTheme(themeId) || { 
     bg: "bg-white", 
@@ -19,14 +21,14 @@ export default function PhonePreview({
 
   return (
     <>
-      {/* Scrollbar Hide Utility Style */}
+      {/* CSS Injection to hide scrollbars across all browsers */}
       <style jsx global>{`
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
         .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
         }
       `}</style>
 
@@ -48,7 +50,7 @@ export default function PhonePreview({
           aria-hidden="true"
         />
         
-        {/* Scrollable Content Area with scrollbar hidden */}
+        {/* Scrollable Content Area with Hidden Scrollbar */}
         <div className="h-full overflow-y-auto scrollbar-hide p-6 sm:p-8 flex flex-col items-center pt-12 sm:pt-16">
           
           {/* Avatar */}
@@ -79,7 +81,7 @@ export default function PhonePreview({
           </p>
           
           <p className={`text-xs sm:text-sm text-center mt-3 leading-relaxed opacity-80 whitespace-pre-wrap break-words w-full ${activeTheme.text}`}>
-            {profile.bio || "Welcome to my Zookly!"}
+            {profile.bio || "Welcome to my LinkHub!"}
           </p>
 
           {/* Dynamic Links */}
