@@ -42,6 +42,9 @@ export default function PhonePreview({
           shadow-2xl overflow-hidden 
           ${activeTheme.bg} transition-colors duration-300
         `}
+        style={{
+          boxShadow: "0 0 0 2px rgba(255, 255, 255, 0.1), 0 20px 40px rgba(0,0,0,0.4)" 
+        }}
         aria-label={`Mobile preview for @${profile.username}`}
       >
         {/* Decorative Notch */}
@@ -54,7 +57,10 @@ export default function PhonePreview({
         <div className="h-full overflow-y-auto scrollbar-hide p-6 sm:p-8 flex flex-col items-center pt-12 sm:pt-16">
           
           {/* Avatar */}
-          <div className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-full mb-4 border-4 shadow-md overflow-hidden shrink-0 ${activeTheme.text === 'text-white' ? 'border-white/20' : 'border-black/10'}`}>
+          <div className={`
+             relative w-20 h-20 sm:w-24 sm:h-24 rounded-full mb-4 border-4 shadow-md overflow-hidden shrink-0 
+             ${activeTheme.text === 'text-white' ? 'border-white/20' : 'border-black/10'}
+          `}>
             {profile.image ? (
               <Image 
                 src={profile.image} 
@@ -110,7 +116,7 @@ export default function PhonePreview({
 
             {linksToRender.length === 0 && (
                <div className={`text-center text-xs opacity-50 mt-4 ${activeTheme.text}`}>
-                  No links added yet...
+                 No links added yet...
                </div>
             )}
           </div>
