@@ -1,11 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { claimUsername } from "@/actions/usernameActions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Loader2, ArrowRight, Sparkles, CheckCircle2, Link as LinkIcon } from "lucide-react";
 
-export default function Onboarding() {
+// 1. The Content Component (Contains all your logic & beautiful UI)
+function OnboardingContent() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -34,6 +35,10 @@ export default function Onboarding() {
     setError("");
 
     try {
+      // In Next.js client forms, we manually create FormData or pass the value directly
+      // Since we are preventing default submission behavior or using action prop, 
+      // let's ensure we pass the right data structure expected by your server action.
+      // If your server action expects FormData:
       const result = await claimUsername(formData);
 
       if (result.success) {
@@ -175,11 +180,24 @@ export default function Onboarding() {
         </form>
       </main>
 
-      {/* Footer Badge */}
+      {/* Footer Badge (Optional) */}
       <div className="mt-8 bg-white/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/50 shadow-sm text-xs text-slate-500 flex items-center gap-2">
         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-        Logged in as <span className="font-bold text-slate-800">{searchParams.get('email') || 'User'}</span>
+        Logged in
       </div>
     </div>
+  );
+}
+
+// 2. The Main Component (Wraps content in Suspense)
+export default function Onboarding() {
+  return (
+    <Suspense fallback={
+      <div className="flex h-screen w-full items-center justify-center bg-slate-50">
+        <Loader2 className="animate-spin text-slate-400" size={32} />
+      </div>
+    }>
+      <OnboardingContent />
+    </Suspense>
   );
 }

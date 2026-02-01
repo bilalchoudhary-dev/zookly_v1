@@ -4,8 +4,9 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Github, LogOut, Loader2, User, LayoutDashboard, ArrowRight, ShieldCheck } from "lucide-react";
+import { Suspense } from "react";
 
-export default function LoginPage() {
+ function LoginContent() {
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
@@ -143,5 +144,17 @@ export default function LoginPage() {
         By continuing, you agree to our Terms of Service and Privacy Policy.
       </p>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex h-screen w-full items-center justify-center bg-slate-50">
+        <Loader2 className="animate-spin text-slate-400" size={32} />
+      </div>
+    }>
+      <LoginContent />
+    </Suspense>
   );
 }
