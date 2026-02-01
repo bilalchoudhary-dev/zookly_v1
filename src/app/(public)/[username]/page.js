@@ -1,13 +1,12 @@
 import dbConnect from "@/lib/mongoose";
 import User from "@/models/User";
 import { notFound } from "next/navigation";
-import Image from "next/image"; // Optimization: Replaces standard img
+import Image from "next/image"; 
 import { getTheme } from "@/lib/themes";
 import TrackingLink from "@/Components/public/TrackingLink";
 import React from "react";
-import { Sparkles } from "lucide-react"; // Added for branding flair
+import { Sparkles } from "lucide-react"; 
 
-// 1. Metadata: Read-only (Don't count views here to avoid bot inflation)
 export async function generateMetadata({ params }) {
   const { username } = await params;
   await dbConnect();
@@ -15,8 +14,7 @@ export async function generateMetadata({ params }) {
 
   if (!user) return {};
 
-  // 1. Define the BASE URL (Use your real domain in production)
-  // In development, localhost works only for YOU, not for WhatsApp.
+  
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://zookly.vercel.app"; 
 
   return {
@@ -42,8 +40,6 @@ export async function generateMetadata({ params }) {
 export default async function PublicProfile({ params }) {
   const { username } = await params;
   await dbConnect();
-
-s
   const user = await User.findOneAndUpdate(
     { username },
     { $inc: { views: 1 } },
@@ -80,7 +76,7 @@ s
           >
             {user.image ? (
               <Image
-                src={user.image}
+                src={user.image }
                 alt={user.name || username}
                 fill
                 priority // Critical for LCP Score
