@@ -98,7 +98,7 @@ export default function Home() {
                 <label htmlFor="username-input" className="sr-only">
                   Claim your username
                 </label>
-                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 font-bold pointer-events-none transition-colors group-focus-within:text-slate-600">
+                <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-800 font-bold pointer-events-none transition-colors group-focus-within:text-slate-600">
                   zookly.app/
                 </span>
                 <input
@@ -108,7 +108,7 @@ export default function Home() {
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="yourname"
                   autoComplete="off"
-                  className="w-full py-4 pl-[8.5rem] pr-6 rounded-full bg-slate-50 border-2 border-slate-200 focus:border-slate-900 focus:outline-none font-bold text-lg transition-all placeholder:text-slate-300 hover:border-slate-300"
+                  className="w-full py-4 pl-[8.5rem] pr-6 rounded-full bg-slate-50 border-2 border-slate-200 focus:border-slate-900 focus:outline-none font-bold text-lg transition-all placeholder:text-slate-500 hover:border-slate-300"
                 />
               </div>
               <button
