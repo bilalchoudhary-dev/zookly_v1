@@ -15,10 +15,34 @@ const geistMono = Geist_Mono({
   display: "swap", 
 });
 
+
+
+
 export const metadata = {
-  title: "Zookly - Your Link in Bio Solution",
-  description: "Consolidate your online presence with Zookly.",
+  metadataBase: new URL("https://zookly.vercel.app"),
+
+  title: {
+    default: "Zookly - Your Link in Bio Solution",
+    template: "%s | Zookly", 
+  },
+  description: "One link for everything., Consolidate your online presence with Zookly.",
+  
+  keywords: ["link in bio", "social media tools", "creator tools", "zookly", "bio link"],
+
+  alternates: {
+    canonical: "/",
+  },
+
+  openGraph: {
+    title: "Zookly",
+    description: "One link for everything.",
+    url: "https://zookly.vercel.app",
+    siteName: "Zookly",
+    locale: "en_US",
+    type: "website",
+  },
 };
+
 
 export default function RootLayout({ children }) {
   return (
