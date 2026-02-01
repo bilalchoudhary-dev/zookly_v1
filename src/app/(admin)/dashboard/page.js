@@ -169,7 +169,6 @@ export default function DashboardPage() {
 
       </main>
 
-      {/* --- PREVIEW COLUMN (Lazy Loaded) --- */}
       <aside className="hidden lg:block sticky top-10 h-fit w-[350px]">
         <div className="px-4 py-1.5 bg-slate-900 rounded-full mb-6 w-fit mx-auto">
           <span className="text-[10px] font-black uppercase tracking-widest text-white">Live Preview</span>
@@ -194,10 +193,10 @@ export default function DashboardPage() {
       {/* --- MOBILE STICKY BAR --- */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-slate-200 lg:hidden z-50 pb-[env(safe-area-inset-bottom)]">
         <div className="flex gap-3">
-          <button onClick={() => setShowMobilePreview(true)} className="flex-1 py-3.5 bg-slate-100 text-slate-900 rounded-xl font-bold flex items-center justify-center gap-2">
+          <button onClick={() => setShowMobilePreview(true)} className="flex-1 mb-5 py-3.5 bg-slate-100 text-slate-900 rounded-xl font-bold flex items-center justify-center gap-2">
             <Eye size={20} /> Preview
           </button>
-          <button onClick={handleSave} disabled={isSaving} className="flex-[2] py-3.5 bg-blue-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg">
+          <button onClick={handleSave} disabled={isSaving} className="flex-[2] py-3.5 mb-5 bg-blue-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg">
             {isSaving ? <Loader2 className="animate-spin" /> : <Save size={20} />}
             {isSaving ? "Saving..." : "Save"}
           </button>
