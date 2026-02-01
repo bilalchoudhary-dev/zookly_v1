@@ -6,16 +6,18 @@ import { Toaster } from "sonner";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap", 
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap", 
 });
 
 export const metadata = {
   title: "Zookly - Your Link in Bio Solution",
-  description: "Consolidate your online presence with Zookly. Create a personalized link in bio page to showcase all your content, social media, and more in one place.",
+  description: "Consolidate your online presence with Zookly.",
 };
 
 export default function RootLayout({ children }) {
@@ -27,8 +29,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Toaster position="top-center" richColors />
-        <SessionWrapper>{children}</SessionWrapper>
+        <SessionWrapper>
+          <Toaster position="top-center" richColors />
+          {children}
+        </SessionWrapper>
       </body>
     </html>
   );

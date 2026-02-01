@@ -3,6 +3,7 @@ import { useState } from "react";
 import Navbar from "@/Components/home/Navbar";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
+import dynamic from "next/dynamic"; 
 import {
   Zap,
   Shield,
@@ -13,7 +14,15 @@ import {
   Instagram,
   Linkedin,
 } from "lucide-react";
-import PhonePreview from "@/Components/dashboard/PhonePreview";
+
+const PhonePreview = dynamic(() => import("@/Components/dashboard/PhonePreview"), {
+  ssr: false, 
+  loading: () => (
+    <div className="w-[300px] h-[600px] bg-slate-100 rounded-[3rem] border-8 border-slate-900 flex items-center justify-center shadow-2xl">
+      <div className="w-8 h-8 border-4 border-slate-300 border-t-blue-600 rounded-full animate-spin"></div>
+    </div>
+  ),
+});
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -40,8 +49,8 @@ export default function Home() {
     bio: session?.user?.bio
       ? session.user.bio
       : session?.user?.name
-        ? `Hi, I'm ${session.user.name}. Welcome to my Zookly!`
-        : "Digital Creator & Designer. Sharing my latest work and resources below.",
+      ? `Hi, I'm ${session.user.name}. Welcome to my Zookly!`
+      : "Digital Creator & Designer. Sharing my latest work and resources below.",
     theme: session?.user?.theme || "minimal",
   };
 
@@ -65,7 +74,6 @@ export default function Home() {
   ];
 
   return (
-    // FIX: Added 'overflow-x-hidden' to prevent horizontal scrolling from decorative blobs
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-blue-100 overflow-x-hidden">
       <Navbar />
 
@@ -124,6 +132,7 @@ export default function Home() {
           <div className="flex-1 w-full max-w-[400px] flex justify-center perspective-1000">
             <div className="relative transform md:rotate-y-[-12deg] md:rotate-x-[5deg] transition-all duration-500 hover:rotate-0">
               <div className="relative z-20">
+                
                 <PhonePreview
                   links={previewLinks}
                   profile={previewProfile}
@@ -131,7 +140,7 @@ export default function Home() {
                 />
               </div>
 
-              {/* Decorative blobs behind phone - These caused the overflow */}
+              {/* Decorative blobs behind phone */}
               <div className="absolute top-10 -right-20 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl -z-10 animate-pulse" />
               <div className="absolute -bottom-10 -left-20 w-72 h-72 bg-purple-400/20 rounded-full blur-3xl -z-10 animate-pulse delay-700" />
             </div>
