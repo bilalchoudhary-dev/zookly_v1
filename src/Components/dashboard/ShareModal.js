@@ -43,7 +43,7 @@ export default function ShareModal({ isOpen, onClose, username }) {
   };
 
   const shareData = {
-    title: `Check out my LinkHub!`,
+    title: `Check out my Zookly!`,
     text: `Visit my profile: @${username}`,
     url: profileUrl,
   };
@@ -66,7 +66,7 @@ export default function ShareModal({ isOpen, onClose, username }) {
         
         {/* Header */}
         <div className="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-          <h3 className="font-bold text-lg text-slate-900">Share your LinkHub</h3>
+          <h3 className="font-bold text-lg text-slate-900">Share your Zookly</h3>
           <button 
             onClick={onClose}
             className="p-2 hover:bg-slate-200 rounded-full transition-colors text-slate-500"

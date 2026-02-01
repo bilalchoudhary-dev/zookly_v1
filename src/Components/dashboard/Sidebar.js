@@ -54,7 +54,7 @@ export default function Sidebar() {
       {/* Mobile Top Header */}
       <header className="md:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-200 px-4 flex items-center justify-between z-40">
         <h1 className="text-xl font-bold tracking-tight text-slate-900">
-          LinkHub<span className="text-blue-600">.</span>
+          Zookly<span className="text-blue-600">.</span>
         </h1>
         <button
           onClick={() => setIsMobileMenuOpen(true)}
@@ -160,7 +160,7 @@ export default function Sidebar() {
       <aside className="hidden md:flex w-64 border-r border-slate-200 bg-white flex-col h-screen sticky top-0">
         <div className="p-6">
           <h1 className="text-xl font-bold tracking-tight text-slate-900">
-            LinkHub<span className="text-blue-600">.</span>
+            Zookly<span className="text-blue-600">.</span>
           </h1>
         </div>
 

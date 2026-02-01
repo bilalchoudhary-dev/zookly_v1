@@ -11,7 +11,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="text-xl font-black tracking-tighter flex items-center gap-1">
-          LinkHub<span className="text-blue-600">.</span>
+          Zookly<span className="text-blue-600">.</span>
         </Link>
 
         {/* Dynamic CTA */}

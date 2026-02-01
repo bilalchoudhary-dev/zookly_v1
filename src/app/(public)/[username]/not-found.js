@@ -20,7 +20,7 @@ export default function UserNotFound() {
         </h1>
         
         <p className="text-slate-500 text-lg mb-10 leading-relaxed">
-          The LinkHub page you are looking for doesn't exist. It might have been moved or deleted.
+          The Zookly page you are looking for doesn't exist. It might have been moved or deleted.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
@@ -30,7 +30,7 @@ export default function UserNotFound() {
             className="w-full sm:w-auto bg-slate-900 text-white px-8 py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/20 transition-all active:scale-[0.98]"
           >
             <Sparkles size={18} />
-            Create your LinkHub
+            Create your Zookly
           </Link>
 
           {/* Secondary CTA */}
@@ -48,7 +48,7 @@ export default function UserNotFound() {
       {/* Footer Branding */}
       <footer className="absolute bottom-8 opacity-40 hover:opacity-100 transition-opacity">
         <span className="flex items-center gap-2 font-bold text-xs uppercase tracking-widest text-slate-500">
-          LinkHub
+          Zookly
         </span>
       </footer>
     </div>

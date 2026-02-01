@@ -195,7 +195,7 @@ export default function DashboardPage() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-bold text-slate-900 leading-none truncate">@{profile.username}</p>
-              <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">Your LinkHub Handle</p>
+              <p className="text-xs text-slate-500 mt-1 uppercase tracking-wider font-semibold">Your Zookly Handle</p>
             </div>
             {/* <div className="relative z-10">
               <button

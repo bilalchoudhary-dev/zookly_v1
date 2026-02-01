@@ -83,7 +83,7 @@ export default function Onboarding() {
               {/* Animated Label/Prefix */}
               <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-1 text-slate-400 font-medium select-none pointer-events-none transition-colors group-focus-within:text-blue-500">
                 <LinkIcon size={16} />
-                <span>linkhub.com/</span>
+                <span>Zookly.com/</span>
               </div>
               
               <input
@@ -129,7 +129,7 @@ export default function Onboarding() {
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">Your Live Link</p>
                 <p className="text-sm font-bold text-slate-900 truncate">
-                  linkhub.com/<span className="text-blue-600">{inputValue || "username"}</span>
+                  Zookly.com/<span className="text-blue-600">{inputValue || "username"}</span>
                 </p>
               </div>
             </div>

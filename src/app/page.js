@@ -13,7 +13,7 @@ export default function Home() {
 
   const handleClaim = (e) => {
     e.preventDefault();
-    const cleanUsername = username.replace("linkhub.com/", "").trim();
+    const cleanUsername = username.replace("Zookly.com/", "").trim();
     const targetUrl = `/onboarding?desiredUsername=${encodeURIComponent(cleanUsername)}`;
 
     if (session) {
@@ -27,7 +27,7 @@ export default function Home() {
     username: session?.user?.username || "yourname",
     image: session?.user?.image || "", 
     bio: session?.user?.name 
-       ? `Hi, I'm ${session.user.name}. Welcome to my LinkHub!` 
+       ? `Hi, I'm ${session.user.name}. Welcome to my Zookly!` 
        : "Digital Creator & Designer. Sharing my latest work and resources below.",
     theme: "air", 
   };
@@ -61,14 +61,14 @@ export default function Home() {
             </h1>
             
             <p className="text-lg text-slate-500 mb-10 max-w-xl mx-auto md:mx-0 leading-relaxed">
-              Join 50M+ creators using LinkHub. One link to help you share everything you create, curate, and sell.
+              Join 50M+ creators using Zookly. One link to help you share everything you create, curate, and sell.
             </p>
 
             <form onSubmit={handleClaim} className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-lg mx-auto md:mx-0 mb-12">
               <div className="relative w-full group">
                 <label htmlFor="username-input" className="sr-only">Claim your username</label>
                 <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 font-bold pointer-events-none transition-colors group-focus-within:text-slate-600">
-                  linkhub.com/
+                  Zookly.com/
                 </span>
                 <input 
                   id="username-input"
@@ -142,7 +142,7 @@ export default function Home() {
       </main>
 
       <footer className="py-12 text-center bg-white border-t border-slate-100">
-        <p className="text-slate-500 text-sm font-medium">© 2024 LinkHub. All rights reserved.</p>
+        <p className="text-slate-500 text-sm font-medium">© 2024 Zookly. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -148,7 +148,7 @@ export default async function PublicProfile({ params }) {
             className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full hover:bg-black/5 transition-colors"
           >
             <Sparkles size={12} />
-            Powered by LinkHub
+            Powered by Zookly
           </a>
         </footer>
 

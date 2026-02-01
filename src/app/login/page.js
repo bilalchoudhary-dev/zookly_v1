@@ -85,7 +85,7 @@ export default function LoginPage() {
           <div className="w-14 h-14 bg-blue-600 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg shadow-blue-600/20 rotate-3 hover:rotate-6 transition-transform duration-300">
             <User className="text-white" size={28} />
           </div>
-          <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">Welcome to LinkHub</h1>
+          <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-2">Welcome to Zookly</h1>
           <p className="text-slate-500 text-sm font-medium">
             Sign in to manage your links and analytics.
           </p>
