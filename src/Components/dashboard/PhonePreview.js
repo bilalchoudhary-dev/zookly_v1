@@ -81,7 +81,7 @@ export default function PhonePreview({
           </p>
           
           <p className={`text-xs sm:text-sm text-center mt-3 leading-relaxed opacity-80 whitespace-pre-wrap break-words w-full ${activeTheme.text}`}>
-            {profile.bio || "Welcome to my LinkHub!"}
+            {profile.bio || "Welcome to my Zookly!"}
           </p>
 
           {/* Dynamic Links */}

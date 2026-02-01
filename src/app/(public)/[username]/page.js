@@ -43,8 +43,7 @@ export default async function PublicProfile({ params }) {
   const { username } = await params;
   await dbConnect();
 
-  // 2. Page Load: Fetch AND Increment Views (Atomic operation)
-  // This ensures we only count real page loads, not metadata crawlers
+s
   const user = await User.findOneAndUpdate(
     { username },
     { $inc: { views: 1 } },
