@@ -86,7 +86,7 @@ export default function SortableLink({
               type="url"
               value={link.url}
               onChange={(e) => updateLink(index, "url", e.target.value)}
-              placeholder="https://your-website.com"
+              placeholder="https://zookly.vercel.app/"
               className={`w-full bg-slate-50 border rounded-lg pl-9 pr-3 py-2 text-sm text-slate-600 placeholder:text-slate-400 outline-none transition-all ${
                 hasUrlError 
                   ? "border-red-300 focus:ring-2 focus:ring-red-200 text-red-600" 

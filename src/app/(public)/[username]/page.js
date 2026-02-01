@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
 
   // 1. Define the BASE URL (Use your real domain in production)
   // In development, localhost works only for YOU, not for WhatsApp.
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://zookly.com"; 
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://zookly.vercel.app"; 
 
   return {
     title: `${user.name} (@${username}) - Zookly`,

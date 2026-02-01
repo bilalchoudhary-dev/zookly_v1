@@ -89,7 +89,7 @@ export async function GET(req) {
               <div style={{ display: 'flex', position: 'relative' }}>
                 <div style={{ position: 'absolute', inset: -6, borderRadius: '100%', border: `4px solid ${brandColor}`, opacity: 0.2 }}></div>
                 <img
-                  src={user.image || "https://zookly.com/default.png"}
+                  src={user.image || "https://zookly.vercel.app/default.png"}
                   alt={user.name}
                   style={{
                     width: 220,

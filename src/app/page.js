@@ -13,7 +13,7 @@ export default function Home() {
 
   const handleClaim = (e) => {
     e.preventDefault();
-    const cleanUsername = username.replace("Zookly.com/", "").trim();
+    const cleanUsername = username.replace("https://zookly.vercel.app/", "").trim();
     const targetUrl = `/onboarding?desiredUsername=${encodeURIComponent(cleanUsername)}`;
 
     if (session) {
