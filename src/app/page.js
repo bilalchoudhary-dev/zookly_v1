@@ -99,7 +99,7 @@ export default function Home() {
                   Claim your username
                 </label>
                 <span className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 font-bold pointer-events-none transition-colors group-focus-within:text-slate-600">
-                  zookly.vercel.app/
+                  zookly.app/
                 </span>
                 <input
                   id="username-input"
