@@ -208,7 +208,7 @@ export default function AppearancePage() {
           <button
             type="button"
             onClick={() => setShowMobilePreview(true)}
-            className="flex-1 py-3.5 bg-slate-100 text-slate-900 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
+            className="flex-1 mb-5 py-3.5 bg-slate-100 text-slate-900 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-[0.98] transition-transform"
           >
             <Eye size={20} />
             Preview
@@ -218,7 +218,7 @@ export default function AppearancePage() {
             type="button"
             onClick={handleSaveTheme}
             disabled={saving || !hasUnsavedChanges}
-            className="flex-[2] py-3.5 bg-slate-900 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition-transform disabled:opacity-70 disabled:bg-slate-700"
+            className="flex-[2] mb-5 py-3.5 bg-slate-900 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition-transform disabled:opacity-70 disabled:bg-slate-700"
           >
             {saving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
             {saving ? "Saving..." : "Apply Theme"}

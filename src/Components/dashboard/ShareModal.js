@@ -15,7 +15,6 @@ export default function ShareModal({ isOpen, onClose, username }) {
   if (!isOpen) return null;
 
   const profileUrl = `${origin}/${username}`;
-  // This is the magic URL that Next.js generates automatically
   const ogImageUrl = `${origin}/api/og?username=${username}`;
 
   const copyToClipboard = () => {
