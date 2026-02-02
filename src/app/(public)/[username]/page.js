@@ -5,7 +5,8 @@ import Image from "next/image";
 import { getTheme } from "@/lib/themes";
 import TrackingLink from "@/Components/public/TrackingLink";
 import React from "react";
-import { Sparkles } from "lucide-react"; 
+import { Link, Sparkles } from "lucide-react"; 
+import ViewTracker from "@/Components/public/ViewTracker";
 
 export async function generateMetadata({ params }) {
   const { username } = await params;
@@ -40,11 +41,7 @@ export async function generateMetadata({ params }) {
 export default async function PublicProfile({ params }) {
   const { username } = await params;
   await dbConnect();
-  const user = await User.findOneAndUpdate(
-    { username },
-    { $inc: { views: 1 } },
-    { new: true } // Return the updated document
-  ).lean();
+  const user = await User.findOne({ username }).lean();
 
   if (!user) {
     notFound();
@@ -55,8 +52,7 @@ export default async function PublicProfile({ params }) {
 
   return (
     <div className={`min-h-screen w-full flex flex-col items-center py-12 sm:py-20 px-4 transition-colors duration-500 ${theme.bg} ${theme.text}`}>
-      
-      {/* Optional: Abstract background pattern if theme is 'minimal' (white) to reduce boredom */}
+      <ViewTracker profileUsername={user?.username} />
       {(!user.theme || user.theme === 'minimal') && (
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
       )}
@@ -124,7 +120,8 @@ export default async function PublicProfile({ params }) {
                 >
                   <TrackingLink 
                     link={safeLink} 
-                    themeButtonClass={theme.button} 
+                    themeButtonClass={theme.button}
+                    profileUsername={user.username}
                   />
                 </div>
               );
@@ -144,6 +141,13 @@ export default async function PublicProfile({ params }) {
           >
             <Sparkles size={12} />
             Powered by Zookly
+          </a>
+           <a
+            href="/"
+            className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full hover:bg-black/5 transition-colors"
+          >
+            <Link size={12} />
+            Go To Zookly Home Page
           </a>
         </footer>
 

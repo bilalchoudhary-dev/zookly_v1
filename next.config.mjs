@@ -5,21 +5,21 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
+        hostname: 'lh3.googleusercontent.com', // Allow images from Google user content
         port: '',
         pathname: '/**',
       },
       {
         protocol: 'https',
-        hostname: 'avatars.githubusercontent.com',
+        hostname: 'avatars.githubusercontent.com', // Allow images from GitHub avatars
         port: '',
         pathname: '/**',
       },
       {
         protocol: 'https',
-        hostname: 'i.pinimg.com', // Allow images from Pinterest
-        pathname: '**',
-      },
+        hostname: 'res.cloudinary.com', // Allow images from Cloudinary
+        pathname: '/**',
+      }
     ],
   },
 };

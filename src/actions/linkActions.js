@@ -5,35 +5,51 @@ import { ProfileSchema } from "@/lib/schemas"; // Import the same schema
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+ 
+
 export async function saveProfile(profileData) {
   await dbConnect();
   const session = await getServerSession(authOptions);
   
   if (!session) return { error: "Unauthorized" };
 
-  // 1. SERVER-SIDE VALIDATION (The Security Guard)
   const result = ProfileSchema.safeParse(profileData);
   
   if (!result.success) {
-    // If someone bypasses the frontend, the server catches them here
-    return { error: "Invalid data format. Nice try!" };
+    return { error: "Invalid data format." };
   }
 
-  // 2. Extract validated data
-  const { displayName, bio, links } = result.data;
+  const { displayName, bio, links, username, image } = result.data;
 
   try {
-    await User.findOneAndUpdate(
+    if (username) {
+        const existingUser = await User.findOne({ username });
+        if (existingUser && existingUser.email !== session.user.email) {
+            return { error: "Username is already Exists" };
+        }
+    }
+
+    // 4. Update Database
+    await User.updateOne(
       { email: session.user.email },
       { 
-        name: displayName, 
-        bio: bio,
-        links: links 
+        $set: {
+            name: displayName, 
+            bio: bio,
+            links: links,
+            username: username, 
+            image: image        
+        }
       },
       { runValidators: true }
     );
+    
     return { success: true };
   } catch (e) {
+    console.error(e);
+    if (e.code === 11000) {
+        return { error: "Username is already exists" };
+    }
     return { error: "Database error occurred." };
   }
 }

@@ -4,8 +4,8 @@ import { claimUsername } from "@/actions/usernameActions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Loader2, ArrowRight, Sparkles, CheckCircle2, Link as LinkIcon } from "lucide-react";
+import { toast } from "sonner";
 
-// 1. The Content Component (Contains all your logic & beautiful UI)
 function OnboardingContent() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -35,19 +35,18 @@ function OnboardingContent() {
     setError("");
 
     try {
-      // In Next.js client forms, we manually create FormData or pass the value directly
-      // Since we are preventing default submission behavior or using action prop, 
-      // let's ensure we pass the right data structure expected by your server action.
-      // If your server action expects FormData:
+     
       const result = await claimUsername(formData);
 
       if (result.success) {
         await update({ username: result.username });
         router.refresh();
         router.push("/dashboard");
+        toast.success("🎉 Username claimed successfully!");
       } else {
         setError(result.error || "Failed to claim username");
         setLoading(false);
+        toast.error("Failed to claim username, please try again later.");
       }
     } catch (err) {
       setError("Something went wrong. Please try again.");
@@ -55,7 +54,6 @@ function OnboardingContent() {
     }
   }
 
-  // Visual helper: Check if input has valid length
   const isValidLength = inputValue.length >= 3;
 
   return (
@@ -189,7 +187,6 @@ function OnboardingContent() {
   );
 }
 
-// 2. The Main Component (Wraps content in Suspense)
 export default function Onboarding() {
   return (
     <Suspense fallback={

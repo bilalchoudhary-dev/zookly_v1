@@ -1,15 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic"; // 1. Import dynamic
 import { saveProfile, getProfile, deleteLink } from "@/actions/linkActions";
 import { ProfileSchema } from "@/lib/schemas";
 import { getIconByUrl } from "@/lib/icons";
-import { Save, UserCircle, Loader2, Share2, Eye, X } from "lucide-react";
+import { Save, UserCircle, Loader2, Share2, Eye, X, Camera } from "lucide-react";
 import { toast } from "sonner";
 import ShareModal from "@/Components/dashboard/ShareModal";
 import LinksEditor from "@/Components/dashboard/LinksEditor"; // 2. Import the new component
+import { uploadImage } from "@/actions/uploadActions";
 
 const PhonePreview = dynamic(() => import("@/Components/dashboard/PhonePreview"), {
   ssr: false,
@@ -29,6 +30,8 @@ export default function DashboardPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [showMobilePreview, setShowMobilePreview] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const [isUploading, setIsUploading] = useState(false); 
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -88,9 +91,44 @@ export default function DashboardPage() {
       return;
     }
     const response = await saveProfile(profile);
-    if (response.success) toast.success("Saved!");
-    else toast.error("Failed");
+    if (response.success) toast.success("Saved! your profile is updated.");
+    else toast.error("Failed to save: " + response.error);
     setIsSaving(false);
+  };
+
+  
+
+ const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // 1. Size Check (Limit client side to 5MB)
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Image must be less than 2MB");
+      return;
+    }
+
+    setIsUploading(true);
+
+    // 2. Prepare FormData
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      // 3. Send to Server Action
+      const result = await uploadImage(formData);
+
+      if (result.success) {
+        setProfile((prev) => ({ ...prev, image: result.url }));
+        toast.success("Image uploaded! Please save changes.");
+      } else {
+        toast.error("Upload failed. Try again.");
+      }
+    } catch (err) {
+      toast.error("Something went wrong");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   if (loading) return <div className="h-screen flex items-center justify-center"><Loader2 className="animate-spin" /></div>;
@@ -98,7 +136,6 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col lg:flex-row gap-12 max-w-7xl mx-auto p-4 pb-32 lg:pb-4">
       
-      {/* --- MAIN EDITOR COLUMN --- */}
       <main className="flex-1 space-y-10">
         
         {/* Profile Header Card */}
@@ -120,17 +157,63 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex gap-4 items-center p-4 bg-slate-50 rounded-xl">
-             <div className="relative w-16 h-16 rounded-full overflow-hidden border border-white shadow-sm shrink-0">
-               {profile.image ? (
-                 <Image src={profile.image} alt="Avatar" fill className="object-cover" />
-               ) : (
-                 <div className="w-full h-full bg-slate-200" />
-               )}
-             </div>
-             <div className="flex-1 min-w-0">
-               <p className="font-bold text-slate-900 truncate">@{profile.username}</p>
-               <p className="text-xs text-slate-500 font-semibold uppercase">Zookly Handle</p>
-             </div>
+            {/* --- AVATAR UPLOAD SECTION --- */}
+            <div 
+              className="relative w-16 h-16 rounded-full border border-white shadow-sm shrink-0 cursor-pointer group"
+              onClick={() => !isUploading && fileInputRef.current?.click()} 
+            >
+              {/* Spinner */}
+              {isUploading && (
+                <div className="absolute inset-0 bg-slate-100/80 flex items-center justify-center z-20 rounded-full">
+                  <Loader2 className="animate-spin text-slate-400" size={20} />
+                </div>
+              )}
+
+              {/* The Image */}
+              <div className="relative w-full h-full rounded-full overflow-hidden">
+                {profile.image ? (
+                  <Image src={profile.image} alt="Avatar" fill className="object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-slate-200" />
+                )}
+              </div>
+
+              
+              <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-sm border border-slate-100 z-10">
+                <div className="bg-slate-100 rounded-full p-1 text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-colors">
+                  <Camera size={12} />
+                </div>
+              </div>
+
+              
+            </div>
+
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              className="hidden" 
+              accept="image/*"
+              onChange={handleImageUpload}
+              disabled={isUploading} 
+            />
+            <div className="flex-1 min-w-0 space-y-1">
+              <div className="relative group">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold">@</span>
+                <input
+                  type="text"
+                  value={profile.username}
+                  onChange={(e) => {
+                    // Force lowercase and remove special chars
+                    const clean = e.target.value.toLowerCase().replace(/[^a-z0-9._]/g, "");
+                    setProfile({ ...profile, username: clean });
+                  }}
+                  className="w-full bg-white border border-transparent hover:border-slate-300 focus:border-blue-500 rounded-lg py-1 pl-7 pr-3 font-bold text-slate-900 outline-none transition-all"
+                />
+              </div>
+              <p className="text-xs text-slate-500 font-semibold uppercase">
+                Zookly Handle (Unique)
+              </p>
+            </div>
              <button onClick={() => setIsShareOpen(true)} className="bg-slate-900 text-white p-2 rounded-lg">
                <Share2 size={16} />
              </button>
