@@ -21,7 +21,7 @@ const UserSchema = new Schema({
   links: [LinkSchema],
 }, { timestamps: true });
 
-// This check is vital for Next.js hot reloading
+
 const User = models.User || model('User', UserSchema);
 
 export default User;
