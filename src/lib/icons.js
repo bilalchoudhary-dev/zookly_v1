@@ -9,7 +9,7 @@ export const getIconByUrl = (url) => {
   if (lowUrl.includes('linkedin.com')) return 'Linkedin';
   if (lowUrl.includes('facebook.com')) return 'Facebook';
   if (lowUrl.includes('tiktok.com')) return 'Tiktok';
-  if (lowUrl.includes('whatsapp.com')) return 'message-square'; 
+  if (lowUrl.includes('whatsapp.com') || lowUrl.includes('wa.me') || lowUrl.includes('api.whatsapp.com')) return 'message-square'; 
   if (lowUrl.includes('telegram.me') || lowUrl.includes('t.me')) return 'Send';
   if (lowUrl.includes('discord.com')) return 'rss';
   if (lowUrl.includes('reddit.com')) return 'bot-message-square';
